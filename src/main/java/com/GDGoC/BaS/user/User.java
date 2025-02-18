@@ -1,6 +1,7 @@
 package com.GDGoC.BaS.user;
 
 import com.GDGoC.BaS.drop.DropHistory;
+import com.GDGoC.BaS.notification.Notification;
 import com.GDGoC.BaS.shower.UserRecord;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -59,4 +60,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private List<UserRecord> userRecords = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
+    private List<Notification> notifications = new ArrayList<>();
 }
