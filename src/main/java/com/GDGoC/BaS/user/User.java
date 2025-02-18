@@ -1,5 +1,6 @@
 package com.GDGoC.BaS.user;
 
+import com.GDGoC.BaS.booth.BoothUser;
 import com.GDGoC.BaS.drop.DropHistory;
 import com.GDGoC.BaS.notification.Notification;
 import com.GDGoC.BaS.shower.UserRecord;
@@ -63,4 +64,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private List<Notification> notifications = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
+    private List<BoothUser> boothUsers = new ArrayList<>();
 }
