@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -23,7 +23,7 @@ public class DropHistory {
 
     @CreatedDate
     @Column(nullable = false)
-    protected LocalDateTime createdDate;
+    protected LocalDate createdDate;
 
     @Column(nullable = false)
     private Integer amount;
