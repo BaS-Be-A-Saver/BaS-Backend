@@ -1,9 +1,13 @@
 package com.GDGoC.BaS.user;
 
+import com.GDGoC.BaS.drop.DropHistory;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -47,4 +51,7 @@ public class User {
     @Enumerated(STRING)
     @Column(nullable = false, length = 20)
     private Mouth mouth;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DropHistory> dropHistories = new ArrayList<>();
 }
