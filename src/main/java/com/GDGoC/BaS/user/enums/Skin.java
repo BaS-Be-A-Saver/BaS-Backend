@@ -1,4 +1,4 @@
-package com.GDGoC.BaS.user;
+package com.GDGoC.BaS.user.enums;
 
 public enum Skin {
     FAIR,
