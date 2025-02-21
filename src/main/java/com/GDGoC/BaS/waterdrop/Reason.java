@@ -1,4 +1,4 @@
-package com.GDGoC.BaS.drop;
+package com.GDGoC.BaS.waterdrop;
 
 public enum Reason {
     PRESENT,
