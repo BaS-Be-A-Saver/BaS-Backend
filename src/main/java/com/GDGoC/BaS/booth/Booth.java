@@ -24,9 +24,9 @@ public class Booth {
     @Column(nullable = false, length = 6, unique = true)
     private String code;
 
-    @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "booth", cascade = ALL, orphanRemoval = true)
     private List<BoothUser> boothUsers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "booth", cascade = ALL, orphanRemoval = true)
     private List<BoothRecord> boothRecords = new ArrayList<>();
 }
