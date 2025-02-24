@@ -9,14 +9,14 @@ import com.GDGoC.BaS.booth.BoothUser;
 import com.GDGoC.BaS.clothing.UserAccessory;
 import com.GDGoC.BaS.clothing.UserHead;
 import com.GDGoC.BaS.clothing.UserTowel;
-import com.GDGoC.BaS.user.enums.Provider;
-import com.GDGoC.BaS.waterdrop.WaterdropHistory;
 import com.GDGoC.BaS.notification.Notification;
 import com.GDGoC.BaS.shower.UserRecord;
 import com.GDGoC.BaS.user.enums.Eye;
 import com.GDGoC.BaS.user.enums.Mouth;
 import com.GDGoC.BaS.user.enums.Nose;
+import com.GDGoC.BaS.user.enums.Provider;
 import com.GDGoC.BaS.user.enums.Skin;
+import com.GDGoC.BaS.waterdrop.WaterdropHistory;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -27,9 +27,11 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = PROTECTED)
 public class User {
 
