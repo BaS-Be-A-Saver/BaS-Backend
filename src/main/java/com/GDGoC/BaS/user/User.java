@@ -9,6 +9,7 @@ import com.GDGoC.BaS.booth.BoothUser;
 import com.GDGoC.BaS.clothing.UserAccessory;
 import com.GDGoC.BaS.clothing.UserHead;
 import com.GDGoC.BaS.clothing.UserTowel;
+import com.GDGoC.BaS.user.enums.Provider;
 import com.GDGoC.BaS.waterdrop.WaterdropHistory;
 import com.GDGoC.BaS.notification.Notification;
 import com.GDGoC.BaS.shower.UserRecord;
@@ -66,6 +67,13 @@ public class User {
     @Enumerated(STRING)
     @Column(nullable = false, length = 20)
     private Mouth mouth;
+
+    @Enumerated(STRING)
+    @Column(nullable = false)
+    private Provider provider;
+
+    @Column(nullable = false)
+    private String providerId;
 
     @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private List<WaterdropHistory> waterdropHistories = new ArrayList<>();
