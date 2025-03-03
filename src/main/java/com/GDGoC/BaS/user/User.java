@@ -1,5 +1,6 @@
 package com.GDGoC.BaS.user;
 
+import static com.GDGoC.BaS.user.enums.Provider.GOOGLE;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -97,4 +98,22 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private List<UserAccessory> userAccessories = new ArrayList<>();
+
+    private User(String email, String nickname, Provider provider, String providerId) {
+        this.email = email;
+        this.nickname = nickname;
+        this.goal = 600;
+        this.waterdrop = 0;
+        this.skin = Skin.LIGHT;
+        this.eye = Eye.BASIC;
+        this.nose = Nose.BASIC;
+        this.mouth = Mouth.BASIC;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
+
+    public static User createByGoogleOAuth(String email, String providerId) {
+        String nickname = "google_" + email.substring(0, email.indexOf("@"));
+        return new User(email, nickname, GOOGLE, providerId);
+    }
 }
