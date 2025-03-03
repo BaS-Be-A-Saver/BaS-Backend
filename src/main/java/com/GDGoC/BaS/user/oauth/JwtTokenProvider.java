@@ -1,4 +1,4 @@
-package com.GDGoC.BaS.config;
+package com.GDGoC.BaS.user.oauth;
 
 import com.GDGoC.BaS.user.User;
 import io.jsonwebtoken.Jwts;
