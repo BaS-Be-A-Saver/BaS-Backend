@@ -17,7 +17,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User getUserOrException(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("no user found with that userId"));
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
     }
 
     @Transactional(readOnly = true)
