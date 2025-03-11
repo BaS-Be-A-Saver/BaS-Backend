@@ -1,14 +1,18 @@
 package com.GDGoC.BaS.booth;
 
-import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
@@ -29,4 +33,10 @@ public class Booth {
 
     @OneToMany(mappedBy = "booth", cascade = ALL, orphanRemoval = true)
     private List<BoothRecord> boothRecords = new ArrayList<>();
+
+    @Builder
+    public Booth(String name, String code) {
+        this.name = name;
+        this.code = code;
+    }
 }
