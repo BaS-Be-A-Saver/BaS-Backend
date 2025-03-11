@@ -30,4 +30,9 @@ public class UserService {
 
         return LoginResponse.of(token);
     }
+
+    @Transactional(readOnly = true)
+    public UserDropDto getUserDrop(User user) {
+        return UserDropDto.of(user.getWaterdrop());
+    }
 }
