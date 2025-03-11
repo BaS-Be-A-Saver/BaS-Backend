@@ -122,4 +122,8 @@ public class User {
     public static User createByGoogleOAuth(String email, String socialId, String defaultNickname) {
         return new User(email, socialId, defaultNickname, GOOGLE);
     }
+
+    public void addWaterdrop(Integer amount) {
+        this.waterdrop += amount;
+    }
 }
