@@ -24,6 +24,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import java.util.ArrayList;
@@ -34,6 +36,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
+@Table(uniqueConstraints = {
+        @UniqueConstraint(
+                name = "UNIQUE_SOCIAL_ID_CONSTRAINT",
+                columnNames = "social_id")
+})
 public class User {
 
     @Id
@@ -42,6 +49,9 @@ public class User {
 
     @Column(nullable = false)
     private String email;
+
+    @Column(name = "social_id", nullable = false, unique = true)
+    private String socialId;
 
     @Column(nullable = false)
     private String nickname;
@@ -75,9 +85,6 @@ public class User {
     @Column(nullable = false)
     private Provider provider;
 
-    @Column(nullable = false)
-    private String providerId;
-
     @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private List<WaterdropHistory> waterdropHistories = new ArrayList<>();
 
@@ -99,8 +106,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private List<UserAccessory> userAccessories = new ArrayList<>();
 
-    private User(String email, String nickname, Provider provider, String providerId) {
+    private User(String email, String socialId, String nickname, Provider provider) {
         this.email = email;
+        this.socialId = socialId;
         this.nickname = nickname;
         this.goal = 600;
         this.waterdrop = 0;
@@ -109,11 +117,9 @@ public class User {
         this.nose = Nose.BASIC;
         this.mouth = Mouth.BASIC;
         this.provider = provider;
-        this.providerId = providerId;
     }
 
-    public static User createByGoogleOAuth(String email, String providerId) {
-        String nickname = "google_" + email.substring(0, email.indexOf("@"));
-        return new User(email, nickname, GOOGLE, providerId);
+    public static User createByGoogleOAuth(String email, String socialId, String defaultNickname) {
+        return new User(email, socialId, defaultNickname, GOOGLE);
     }
 }
