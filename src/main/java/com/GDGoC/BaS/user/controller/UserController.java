@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.OK;
 import com.GDGoC.BaS.user.dto.LoginResponse;
 import com.GDGoC.BaS.user.domain.User;
 import com.GDGoC.BaS.user.dto.UserDropDto;
+import com.GDGoC.BaS.user.dto.UserInfoDto;
 import com.GDGoC.BaS.user.service.UserService;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,13 @@ public class UserController {
         return ResponseEntity
                 .status(OK)
                 .body(userService.getUserDrop(user));
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<UserInfoDto> getUserInfo(Principal principal) {
+        User user = userService.getUserOrException(Long.valueOf(principal.getName()));
+        return ResponseEntity
+                .status(OK)
+                .body(userService.getUserInfo(user));
     }
 }
