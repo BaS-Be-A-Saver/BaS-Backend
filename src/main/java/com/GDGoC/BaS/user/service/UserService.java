@@ -3,6 +3,7 @@ package com.GDGoC.BaS.user.service;
 import com.GDGoC.BaS.user.domain.User;
 import com.GDGoC.BaS.user.dto.LoginResponse;
 import com.GDGoC.BaS.user.dto.UserDropDto;
+import com.GDGoC.BaS.user.dto.UserInfoDto;
 import com.GDGoC.BaS.user.oauth.JwtTokenProvider;
 import com.GDGoC.BaS.user.oauth.UserAuthentication;
 import com.GDGoC.BaS.user.repository.UserRepository;
@@ -38,5 +39,10 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserDropDto getUserDrop(User user) {
         return UserDropDto.of(user.getWaterdrop());
+    }
+
+    @Transactional(readOnly = true)
+    public UserInfoDto getUserInfo(User user) {
+        return UserInfoDto.of(user);
     }
 }

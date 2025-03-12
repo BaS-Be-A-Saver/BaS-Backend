@@ -1,6 +1,6 @@
 package com.GDGoC.BaS.user.domain;
 
-import static com.GDGoC.BaS.user.enums.Provider.GOOGLE;
+import static com.GDGoC.BaS.user.domain.enums.Provider.GOOGLE;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -12,11 +12,11 @@ import com.GDGoC.BaS.clothing.domain.UserHead;
 import com.GDGoC.BaS.clothing.domain.UserTowel;
 import com.GDGoC.BaS.notification.domain.Notification;
 import com.GDGoC.BaS.shower.domain.UserRecord;
-import com.GDGoC.BaS.user.enums.Eye;
-import com.GDGoC.BaS.user.enums.Mouth;
-import com.GDGoC.BaS.user.enums.Nose;
-import com.GDGoC.BaS.user.enums.Provider;
-import com.GDGoC.BaS.user.enums.Skin;
+import com.GDGoC.BaS.user.domain.enums.Eye;
+import com.GDGoC.BaS.user.domain.enums.Mouth;
+import com.GDGoC.BaS.user.domain.enums.Nose;
+import com.GDGoC.BaS.user.domain.enums.Provider;
+import com.GDGoC.BaS.user.domain.enums.Skin;
 import com.GDGoC.BaS.waterdrop.domain.WaterdropHistory;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
