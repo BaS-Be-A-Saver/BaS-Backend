@@ -3,6 +3,7 @@ package com.GDGoC.BaS.booth.controller;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import com.GDGoC.BaS.booth.dto.BoothCreateDto;
+import com.GDGoC.BaS.booth.dto.BoothUserCreateDto;
 import com.GDGoC.BaS.booth.service.BoothService;
 import com.GDGoC.BaS.user.domain.User;
 import com.GDGoC.BaS.user.service.UserService;
@@ -28,6 +29,17 @@ public class BoothController {
                                             @Valid @RequestBody BoothCreateDto request) {
         User user = userService.getUserOrException(Long.valueOf(principal.getName()));
         boothService.createBooth(user, request);
+
+        return ResponseEntity
+                .status(CREATED)
+                .build();
+    }
+
+    @PostMapping("/join")
+    public ResponseEntity<Void> joinBooth(Principal principal,
+                                          @Valid @RequestBody BoothUserCreateDto request) {
+        User user = userService.getUserOrException(Long.valueOf(principal.getName()));
+        boothService.joinBooth(user, request);
 
         return ResponseEntity
                 .status(CREATED)
