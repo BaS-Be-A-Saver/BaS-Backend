@@ -6,6 +6,7 @@ import com.GDGoC.BaS.user.dto.LoginResponse;
 import com.GDGoC.BaS.user.domain.User;
 import com.GDGoC.BaS.user.dto.UserDropDto;
 import com.GDGoC.BaS.user.dto.UserInfoDto;
+import com.GDGoC.BaS.user.dto.UserStatusDto;
 import com.GDGoC.BaS.user.service.UserService;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +47,13 @@ public class UserController {
         return ResponseEntity
                 .status(OK)
                 .body(userService.getUserInfo(user));
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<UserStatusDto> getUserStatus(Principal principal) {
+        User user = userService.getUserOrException(Long.valueOf(principal.getName()));
+        return ResponseEntity
+                .status(OK)
+                .body(userService.getUserStatus(user));
     }
 }
