@@ -2,6 +2,7 @@ package com.GDGoC.BaS.clothing.domain;
 
 import com.GDGoC.BaS.user.domain.User;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.LAZY;
@@ -9,6 +10,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = PROTECTED)
 public class UserAccessory {
 
