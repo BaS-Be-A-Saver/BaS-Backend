@@ -1,5 +1,6 @@
 package com.GDGoC.BaS.booth.service;
 
+import com.GDGoC.BaS.booth.dto.BoothUserCreateDto;
 import com.GDGoC.BaS.booth.repository.BoothRepository;
 import com.GDGoC.BaS.booth.domain.BoothUser;
 import com.GDGoC.BaS.booth.repository.BoothUserRepository;
@@ -57,6 +58,21 @@ public class BoothService {
     }
 
     private void joinUserToBooth(User user, Booth booth) {
+        BoothUser boothUser = BoothUser.builder()
+                .user(user)
+                .booth(booth)
+                .build();
+        boothUserRepository.save(boothUser);
+    }
+
+    public void joinBooth(User user, BoothUserCreateDto request) {
+        Booth booth = boothRepository.findByCode(request.code())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 부스 코드입니다."));
+
+        if (boothUserRepository.existsByUserAndBooth(user, booth)) {
+            throw new IllegalStateException("이미 참여한 부스입니다.");
+        }
+
         BoothUser boothUser = BoothUser.builder()
                 .user(user)
                 .booth(booth)
