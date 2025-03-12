@@ -1,7 +1,7 @@
 package com.GDGoC.BaS.user.oauth;
 
-import com.GDGoC.BaS.user.User;
-import com.GDGoC.BaS.user.UserRepository;
+import com.GDGoC.BaS.user.domain.User;
+import com.GDGoC.BaS.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
