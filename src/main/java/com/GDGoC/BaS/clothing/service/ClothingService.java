@@ -18,9 +18,9 @@ import com.GDGoC.BaS.clothing.repository.UserAccessoryRepository;
 import com.GDGoC.BaS.clothing.repository.UserHeadRepository;
 import com.GDGoC.BaS.clothing.repository.UserTowelRepository;
 import com.GDGoC.BaS.user.domain.User;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,31 +62,19 @@ public class ClothingService {
 
     @Transactional(readOnly = true)
     public StoreClothesDto getStoreClothes(User user) {
-        Set<Byte> boughtHeadIds = userHeadRepository.findAllByUser(user)
-                .stream()
-                .map(userHead -> userHead.getHead().getHeadId())
-                .collect(Collectors.toSet());
-
+        Set<Byte> boughtHeadIds = new HashSet<>(userHeadRepository.findBoughtHeadIdsByUser(user));
         List<StoreHeadDto> storeHeadDtos = headRepository.findAll()
                 .stream()
                 .map(head -> StoreHeadDto.of(head, boughtHeadIds.contains(head.getHeadId())))
                 .toList();
 
-        Set<Byte> boughtTowelIds = userTowelRepository.findAllByUser(user)
-                .stream()
-                .map(userTowel -> userTowel.getTowel().getTowelId())
-                .collect(Collectors.toSet());
-
+        Set<Byte> boughtTowelIds = new HashSet<>(userTowelRepository.findBoughtTowelIdsByUser(user));
         List<StoreTowelDto> storeTowelDtos = towelRepository.findAll()
                 .stream()
                 .map(towel -> StoreTowelDto.of(towel, boughtTowelIds.contains(towel.getTowelId())))
                 .toList();
 
-        Set<Byte> boughtAccessoryIds = userAccessoryRepository.findAllByUser(user)
-                .stream()
-                .map(userAccessory -> userAccessory.getAccessory().getAccessoryId())
-                .collect(Collectors.toSet());
-
+        Set<Byte> boughtAccessoryIds = new HashSet<>(userAccessoryRepository.findBoughtAccessoryIdsByUser(user));
         List<StoreAccessoryDto> storeAccessoryDtos = accessoryRepository.findAll()
                 .stream()
                 .map(accessory -> StoreAccessoryDto.of(accessory,
