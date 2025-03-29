@@ -3,6 +3,7 @@ package com.GDGoC.BaS.clothing.controller;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.GDGoC.BaS.clothing.dto.MyClothesDto;
+import com.GDGoC.BaS.clothing.dto.StoreClothesDto;
 import com.GDGoC.BaS.clothing.service.ClothingService;
 import com.GDGoC.BaS.user.domain.User;
 import com.GDGoC.BaS.user.service.UserService;
@@ -27,5 +28,13 @@ public class ClothingController {
         return ResponseEntity
                 .status(OK)
                 .body(clothingService.getMyClothes(user));
+    }
+
+    @GetMapping("/store")
+    public ResponseEntity<StoreClothesDto> getStoreClothes(Principal principal) {
+        User user = userService.getUserOrException(Long.valueOf(principal.getName()));
+        return ResponseEntity
+                .status(OK)
+                .body(clothingService.getStoreClothes(user));
     }
 }
