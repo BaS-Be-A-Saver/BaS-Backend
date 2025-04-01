@@ -20,7 +20,7 @@ public class Head {
     @GeneratedValue(strategy = IDENTITY)
     private Byte headId;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 15)
     private String name;
 
     @Column(nullable = false, length = 500)
