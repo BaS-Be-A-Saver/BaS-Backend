@@ -23,7 +23,7 @@ public class Head {
     @Column(nullable = false, length = 15)
     private String name;
 
-    @Column(nullable = false, length = 500)
+    @Column(nullable = false, length = 300)
     private String imageUrl;
 
     @Column(nullable = false)
