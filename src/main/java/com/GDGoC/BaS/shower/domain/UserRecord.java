@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -41,4 +42,11 @@ public class UserRecord {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Builder
+    public UserRecord(Integer goal, Integer duration, User user) {
+        this.goal = goal;
+        this.duration = duration;
+        this.user = user;
+    }
 }
