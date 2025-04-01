@@ -26,7 +26,7 @@ public class Head {
     @Column(nullable = false, length = 300)
     private String imageUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Byte price;
 
     @Column(nullable = false)
