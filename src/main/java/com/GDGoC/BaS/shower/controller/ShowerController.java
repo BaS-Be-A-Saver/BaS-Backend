@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/shower")
+@RequestMapping("/showers")
 @RequiredArgsConstructor
 public class ShowerController {
 
