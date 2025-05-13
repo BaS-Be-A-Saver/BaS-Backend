@@ -11,4 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface BoothUserRepository extends JpaRepository<BoothUser, Long> {
 
     boolean existsByUserAndBooth(User user, Booth booth);
+
+    Optional<BoothUser> findByUserAndBooth(User user, Booth booth);
+
+    long countByBooth(Booth booth);
 }
