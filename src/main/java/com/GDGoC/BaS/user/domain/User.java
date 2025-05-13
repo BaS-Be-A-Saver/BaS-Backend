@@ -126,4 +126,28 @@ public class User {
     public void addWaterdrop(Integer amount) {
         this.waterdrop += amount;
     }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateGoal(Integer goal) {
+        this.goal = goal;
+    }
+
+    public void updateSkin(Skin skin) {
+        this.skin = skin;
+    }
+
+    public void updateEyes(Eye eye) {
+        this.eye = eye;
+    }
+
+    public void updateNose(Nose nose) {
+        this.nose = nose;
+    }
+
+    public void updateMouth(Mouth mouth) {
+        this.mouth = mouth;
+    }
 }
