@@ -1,13 +1,24 @@
 package com.GDGoC.BaS.booth.service;
 
-import com.GDGoC.BaS.booth.dto.BoothUserCreateDto;
-import com.GDGoC.BaS.booth.repository.BoothRepository;
-import com.GDGoC.BaS.booth.domain.BoothUser;
-import com.GDGoC.BaS.booth.repository.BoothUserRepository;
 import com.GDGoC.BaS.booth.domain.Booth;
+import com.GDGoC.BaS.booth.domain.BoothUser;
 import com.GDGoC.BaS.booth.dto.BoothCreateDto;
+import com.GDGoC.BaS.booth.dto.BoothDetailDto;
+import com.GDGoC.BaS.booth.dto.BoothUserCreateDto;
+import com.GDGoC.BaS.booth.dto.BoothUserDto;
+import com.GDGoC.BaS.booth.repository.BoothRepository;
+import com.GDGoC.BaS.booth.repository.BoothUserRepository;
+import com.GDGoC.BaS.clothing.domain.Accessory;
+import com.GDGoC.BaS.clothing.domain.Head;
+import com.GDGoC.BaS.clothing.domain.Towel;
+import com.GDGoC.BaS.clothing.domain.UserAccessory;
+import com.GDGoC.BaS.clothing.domain.UserHead;
+import com.GDGoC.BaS.clothing.domain.UserTowel;
+import com.GDGoC.BaS.shower.domain.UserRecord;
 import com.GDGoC.BaS.user.domain.User;
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -78,5 +89,92 @@ public class BoothService {
                 .booth(booth)
                 .build();
         boothUserRepository.save(boothUser);
+    }
+
+    public BoothDetailDto getBoothDetail(User u, Long boothId) {
+        Booth booth = boothRepository.findById(boothId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 id의 부스가 존재하지 않습니다."));
+
+        List<BoothUser> boothUsers = booth.getBoothUsers();
+
+        LocalDate now = LocalDate.now();
+
+        List<BoothUserDto> boothUserDtos = boothUsers
+                .stream()
+                .map(boothUser -> {
+                    User user = boothUser.getUser();
+
+                    List<UserRecord> records = user.getUserRecords();
+                    int todayDuration = records.stream()
+                            .filter(r -> r.getCreatedDate().isEqual(now))
+                            .map(UserRecord::getDuration)
+                            .findFirst()
+                            .orElse(0);
+
+                    long successCount = records.stream()
+                            .filter(r -> {
+                                LocalDate date = r.getCreatedDate();
+                                return date.getYear() == now.getYear() && date.getMonth() == now.getMonth();
+                            })
+                            .filter(r -> r.getDuration() <= r.getGoal())
+                            .count();
+
+                    String headImage = user.getUserHeads().stream()
+                            .filter(UserHead::getIsEquipped)
+                            .findFirst()
+                            .map(UserHead::getHead)
+                            .map(Head::getImageUrl)
+                            .orElse(null);
+
+                    String towelImage = user.getUserTowels().stream()
+                            .filter(UserTowel::getIsEquipped)
+                            .findFirst()
+                            .map(UserTowel::getTowel)
+                            .map(Towel::getImageUrl)
+                            .orElse(null);
+
+                    String accessoryImage = user.getUserAccessories().stream()
+                            .filter(UserAccessory::getIsEquipped)
+                            .findFirst()
+                            .map(UserAccessory::getAccessory)
+                            .map(Accessory::getImageUrl)
+                            .orElse(null);
+
+                    return new BoothUserDto(
+                            user.getNickname(),
+                            user.getGoal(),
+                            todayDuration,
+                            successCount,
+                            user.getSkin().getImage(),
+                            user.getEye().getImage(),
+                            user.getNose().getImage(),
+                            user.getMouth().getImage(),
+                            headImage,
+                            towelImage,
+                            accessoryImage
+                    );
+                })
+                .toList();
+
+        List<UserRecord> monthlyRecords = boothUsers.stream()
+                .map(BoothUser::getUser)
+                .flatMap(user -> user.getUserRecords().stream())
+                .filter(r -> r.getCreatedDate().getYear() == now.getYear() &&
+                        r.getCreatedDate().getMonth() == now.getMonth())
+                .toList();
+
+        int averageDuration = monthlyRecords.isEmpty() ?
+                0 :
+                (int) monthlyRecords.stream()
+                        .mapToInt(UserRecord::getDuration)
+                        .average()
+                        .orElse(0);
+
+        return new BoothDetailDto(
+                booth.getName(),
+                averageDuration,
+                booth.getCode(),
+                boothUserDtos
+        );
     }
 }

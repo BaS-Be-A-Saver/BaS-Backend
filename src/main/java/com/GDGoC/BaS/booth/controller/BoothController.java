@@ -1,8 +1,10 @@
 package com.GDGoC.BaS.booth.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 import com.GDGoC.BaS.booth.dto.BoothCreateDto;
+import com.GDGoC.BaS.booth.dto.BoothDetailDto;
 import com.GDGoC.BaS.booth.dto.BoothUserCreateDto;
 import com.GDGoC.BaS.booth.service.BoothService;
 import com.GDGoC.BaS.user.domain.User;
@@ -11,6 +13,8 @@ import jakarta.validation.Valid;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,5 +48,15 @@ public class BoothController {
         return ResponseEntity
                 .status(CREATED)
                 .build();
+    }
+
+    @GetMapping("/{boothId}")
+    public ResponseEntity<BoothDetailDto> getBoothDetail(Principal principal,
+                                                         @PathVariable Long boothId) {
+        User user = userService.getUserOrException(Long.valueOf(principal.getName()));
+
+        return ResponseEntity
+                .status(OK)
+                .body(boothService.getBoothDetail(user, boothId));
     }
 }
