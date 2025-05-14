@@ -177,4 +177,20 @@ public class BoothService {
                 boothUserDtos
         );
     }
+
+    public void leaveBooth(User user, Long boothId) {
+        Booth booth = boothRepository.findById(boothId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 부스가 존재하지 않습니다."));
+
+        BoothUser boothUser = boothUserRepository.findByUserAndBooth(user, booth)
+                .orElseThrow(() -> new IllegalArgumentException("해당 부스에 참여하지 않았습니다."));
+
+        boothUserRepository.delete(boothUser);
+
+        long remainingCount = boothUserRepository.countByBooth(booth);
+
+        if (remainingCount == 0) {
+            boothRepository.delete(booth);
+        }
+    }
 }
