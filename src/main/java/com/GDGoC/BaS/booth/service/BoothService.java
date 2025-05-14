@@ -4,8 +4,10 @@ import com.GDGoC.BaS.booth.domain.Booth;
 import com.GDGoC.BaS.booth.domain.BoothUser;
 import com.GDGoC.BaS.booth.dto.BoothCreateDto;
 import com.GDGoC.BaS.booth.dto.BoothDetailDto;
+import com.GDGoC.BaS.booth.dto.BoothPreviewDto;
 import com.GDGoC.BaS.booth.dto.BoothUserCreateDto;
 import com.GDGoC.BaS.booth.dto.BoothUserDto;
+import com.GDGoC.BaS.booth.dto.MyBoothsDto;
 import com.GDGoC.BaS.booth.repository.BoothRepository;
 import com.GDGoC.BaS.booth.repository.BoothUserRepository;
 import com.GDGoC.BaS.clothing.domain.Accessory;
@@ -192,5 +194,16 @@ public class BoothService {
         if (remainingCount == 0) {
             boothRepository.delete(booth);
         }
+    }
+
+    public MyBoothsDto getMyBooths(User user) {
+        LocalDate today = LocalDate.now();
+        List<Booth> booths = boothRepository.findBoothsByUser(user);
+
+        List<BoothPreviewDto> boothPreviews = booths.stream()
+                .map(booth -> BoothPreviewDto.from(booth, today))
+                .toList();
+
+        return new MyBoothsDto(boothPreviews);
     }
 }
