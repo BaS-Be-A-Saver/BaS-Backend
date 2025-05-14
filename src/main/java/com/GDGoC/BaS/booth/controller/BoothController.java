@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.OK;
 import com.GDGoC.BaS.booth.dto.BoothCreateDto;
 import com.GDGoC.BaS.booth.dto.BoothDetailDto;
 import com.GDGoC.BaS.booth.dto.BoothUserCreateDto;
+import com.GDGoC.BaS.booth.dto.MyBoothsDto;
 import com.GDGoC.BaS.booth.service.BoothService;
 import com.GDGoC.BaS.user.domain.User;
 import com.GDGoC.BaS.user.service.UserService;
@@ -71,5 +72,13 @@ public class BoothController {
         return ResponseEntity
                 .status(NO_CONTENT)
                 .build();
+    }
+
+    @GetMapping
+    public ResponseEntity<MyBoothsDto> getMyBooths(Principal principal) {
+        User user = userService.getUserOrException(Long.valueOf(principal.getName()));
+        return ResponseEntity
+                .status(OK)
+                .body(boothService.getMyBooths(user));
     }
 }
